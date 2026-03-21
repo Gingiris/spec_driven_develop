@@ -107,7 +107,11 @@ spec_driven_develop/
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=zhu1090093659/spec_driven_develop&type=Date)](https://star-history.com/#zhu1090093659/spec_driven_develop&Date)
+<p align="center">
+  <a href="https://www.star-history.com/#zhu1090093659/spec_driven_develop&Date" target="_blank">
+    <img src="https://api.star-history.com/svg?repos=zhu1090093659/spec_driven_develop&type=Date" alt="Star History" width="600">
+  </a>
+</p>
 
 ## 许可证
 
