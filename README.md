@@ -102,6 +102,20 @@ Simply describe your large-scale task to the agent. The skill triggers on keywor
 
 When working on a long-running task across multiple conversations, the agent reads `docs/progress/MASTER.md` at the start of each new session to restore context and continue from where it left off.
 
+### Native Task Tracking
+
+When the agent starts a work session, it automatically loads the current phase's pending tasks into the platform's native task tracking tool (e.g. TodoWrite in Claude Code). You get real-time visual progress in your IDE sidebar — no need to open Markdown files manually. MASTER.md remains the persistent source of truth across conversations; the native tool provides in-session visibility.
+
+### Progress Export
+
+An optional script exports your progress data to structured JSON, making it easy to import into external project management tools (Linear, Jira, Notion, etc.):
+
+```bash
+python scripts/export-progress.py docs/progress/
+```
+
+The output includes project metadata, per-phase task details, and an overall completion summary.
+
 ### Cleanup
 
 When all tasks are marked complete in the master progress file, the agent enters cleanup mode: it asks which artifacts you want to keep and removes the rest.
@@ -121,10 +135,11 @@ spec_driven_develop/
 │   │   ├── project-analyzer.md
 │   │   └── task-architect.md
 │   └── commands/spec-dev.md               # /spec-dev slash command
-├── scripts/                               # Installation scripts
+├── scripts/                               # Installation & utility scripts
 │   ├── install-cursor.sh
 │   ├── install-codex.sh
-│   └── install-all.sh
+│   ├── install-all.sh
+│   └── export-progress.py                 # Export progress to JSON
 └── LICENSE
 ```
 

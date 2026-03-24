@@ -102,6 +102,20 @@ bash spec_driven_develop/scripts/install-cursor.sh
 
 在跨多轮对话处理长周期任务时，Agent 会在每次新对话开始时读取 `docs/progress/MASTER.md`，恢复上下文并从上次中断的地方继续。
 
+### 原生任务追踪
+
+Agent 在每次工作会话开始时，会自动把当前阶段的待办任务加载到平台原生的任务追踪工具中（例如 Claude Code 的 TodoWrite）。你可以直接在 IDE 侧边栏里看到实时进度，不需要手动翻 Markdown 文件。MASTER.md 依然是跨对话的持久化真相源，原生工具负责的是会话内的即时可视化。
+
+### 进度导出
+
+一个可选的脚本可以把进度数据导出为结构化 JSON，方便导入到外部项目管理工具（Linear、Jira、Notion 等）：
+
+```bash
+python scripts/export-progress.py docs/progress/
+```
+
+输出包含项目元数据、每个阶段的任务明细，以及整体完成度汇总。
+
 ### 清理
 
 当主进度文件中的所有任务都标记为完成后，Agent 会进入清理模式：它会询问你希望保留哪些产出物，然后移除其余的。
@@ -121,10 +135,11 @@ spec_driven_develop/
 │   │   ├── project-analyzer.md
 │   │   └── task-architect.md
 │   └── commands/spec-dev.md               # /spec-dev 斜杠命令
-├── scripts/                               # 安装脚本
+├── scripts/                               # 安装与工具脚本
 │   ├── install-cursor.sh
 │   ├── install-codex.sh
-│   └── install-all.sh
+│   ├── install-all.sh
+│   └── export-progress.py                 # 进度导出为 JSON
 └── LICENSE
 ```
 
