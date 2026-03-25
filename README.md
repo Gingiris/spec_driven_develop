@@ -151,6 +151,10 @@ spec_driven_develop/
   </a>
 </p>
 
+## Friendly Links
+
+- [linux.do](https://linux.do)
+
 ## License
 
 MIT

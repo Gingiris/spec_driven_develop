@@ -151,6 +151,10 @@ spec_driven_develop/
   </a>
 </p>
 
+## 友情链接
+
+- [linux.do](https://linux.do)
+
 ## 许可证
 
 MIT
