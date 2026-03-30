@@ -2,9 +2,11 @@
 
 # Spec-Driven Develop
 
-**One Markdown file. Zero dependencies. Full pre-development automation.**
+**One Markdown file. Any coding agent. Full pre-development automation.**
 
-Spec-Driven Develop is a cross-platform AI agent skill that automates the pre-development workflow for large-scale complex tasks. It is not a framework, not a runtime, not a package manager — it is a single `SKILL.md` file that teaches your AI agent a structured methodology.
+Spec-Driven Develop is a platform-agnostic AI agent skill that automates the pre-development workflow for large-scale complex tasks. It is not a framework, not a runtime, not a package manager — it is a single `SKILL.md` file that teaches *any* AI coding agent a structured methodology.
+
+The core mechanism is dead simple: your agent reads a Markdown file containing structured instructions, then follows them. No SDK, no API integration, no platform-specific hooks. If your coding agent can read Markdown — and they all can — it works.
 
 When you tell your agent something like "rewrite this project in Rust" or "migrate to a microservice architecture", it automatically kicks off a standardized preparation pipeline before writing a single line of code:
 
@@ -18,7 +20,7 @@ A master progress file (`docs/progress/MASTER.md`) serves as the agent's "memory
 
 ## Why Not Superpowers / oh-my-claude / ...?
 
-The Claude Code ecosystem now has full-blown frameworks with dozens of agents, multi-phase pipelines, and opinionated workflows. They're powerful — but they're also heavy.
+The Claude Code ecosystem now has full-blown frameworks with dozens of agents, multi-phase pipelines, and opinionated workflows. They're powerful — but they're also heavy, and they lock you into a single platform.
 
 | | Spec-Driven Develop | Superpowers | oh-my-claudecode |
 |---|---|---|---|
@@ -26,7 +28,7 @@ The Claude Code ecosystem now has full-blown frameworks with dozens of agents, m
 | **Core files** | 1 Markdown file (~200 lines) | Plugin with multiple skills, agents, hooks | Plugin with 32+ specialized agents |
 | **Dependencies** | None | Requires Claude Code plugin system | Requires Claude Code plugin system |
 | **Methodology** | Document-driven planning | Enforced TDD (RED-GREEN-REFACTOR) | Team-based multi-agent delegation |
-| **Cross-platform** | Claude Code, Codex, Cursor | Claude Code (primary) | Claude Code only |
+| **Cross-platform** | Any agent that reads Markdown | Claude Code (primary) | Claude Code only |
 | **Philosophy** | Do one thing, do it well | Complete development methodology | Parallel multi-agent orchestration |
 
 Spec-Driven Develop takes a fundamentally different approach: instead of wrapping your agent in a framework, it gives the agent a methodology through a plain Markdown file. No hooks, no runtime overhead, no forced workflows. You keep full control.
@@ -36,14 +38,20 @@ Spec-Driven Develop takes a fundamentally different approach: instead of wrappin
 This makes it especially suited for:
 
 - **Teams that already have their own workflow** and just need structured planning for big tasks
-- **Multi-platform users** who work across Claude Code, Codex, and Cursor
+- **Multi-platform users** who don't want to be locked into a single agent ecosystem
 - **Developers who want control**, not a black-box pipeline deciding how they should code
 
-## Supported Platforms
+## Platform Compatibility
+
+The SKILL prompt is written in a generic, platform-neutral way. It gracefully degrades on platforms without certain capabilities — for example, if sub-agents aren't available, it falls back to sequential execution automatically.
+
+**Tested platforms with install scripts:**
 
 - **Claude Code** — installed as a plugin (with enhanced agent/command support)
 - **Codex (OpenAI)** — installed as a skill
 - **Cursor** — installed as a global or project-level skill
+
+**Any other agent** — copy `SKILL.md` to wherever your agent reads instructions. That's it. The file has no external dependencies and no platform-specific logic. It works with Windsurf, Cline, Aider, Continue, Roo Code, Augment, or any other coding agent that reads Markdown-based skills or system prompts.
 
 ## Installation
 
@@ -82,6 +90,27 @@ Or clone the repo and run locally:
 git clone https://github.com/zhu1090093659/spec_driven_develop.git
 bash spec_driven_develop/scripts/install-cursor.sh
 ```
+
+### Other Agents (Generic)
+
+For any other coding agent, just grab the SKILL file and put it where your agent reads instructions:
+
+```bash
+# Download the SKILL.md
+curl -sL https://raw.githubusercontent.com/zhu1090093659/spec_driven_develop/main/plugins/spec-driven-develop/skills/spec-driven-develop/SKILL.md -o SKILL.md
+```
+
+Where to place it depends on your agent:
+
+| Agent | Location |
+|---|---|
+| Windsurf | `.windsurf/skills/` or project rules |
+| Cline | `.cline/skills/` or custom instructions |
+| Aider | Reference via `.aider.conf.yml` or paste into chat |
+| Continue | `.continue/` config or system prompt |
+| Others | Wherever your agent reads custom instructions or system prompts |
+
+If your agent doesn't have a formal "skills" directory, you can paste the content of `SKILL.md` into its system prompt or custom instructions field — the effect is the same.
 
 ## Usage
 
@@ -124,17 +153,14 @@ When all tasks are marked complete in the master progress file, the agent enters
 
 ```
 spec_driven_develop/
-├── .claude-plugin/
-│   └── marketplace.json                   # Claude Code marketplace catalog
 ├── plugins/spec-driven-develop/           # Self-contained Claude Code plugin
-│   ├── .claude-plugin/plugin.json         # Plugin manifest
 │   ├── skills/spec-driven-develop/
-│   │   ├── SKILL.md                       # Core skill (works on all platforms)
+│   │   ├── SKILL.md                       # The core — works on ANY platform
 │   │   └── references/doc-templates.md    # Document templates
-│   ├── agents/                            # Claude Code sub-agents
+│   ├── agents/                            # Claude Code sub-agents (optional)
 │   │   ├── project-analyzer.md
 │   │   └── task-architect.md
-│   └── commands/spec-dev.md               # /spec-dev slash command
+│   └── commands/spec-dev.md               # /spec-dev slash command (Claude Code)
 ├── scripts/                               # Installation & utility scripts
 │   ├── install-cursor.sh
 │   ├── install-codex.sh
@@ -142,6 +168,8 @@ spec_driven_develop/
 │   └── export-progress.py                 # Export progress to JSON
 └── LICENSE
 ```
+
+The only file that matters for cross-platform use is `SKILL.md`. Everything else — agents, commands, plugin manifests — is platform-specific sugar for Claude Code.
 
 ## Star History
 
